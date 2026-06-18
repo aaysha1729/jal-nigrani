@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ===== DESIGN SYSTEM — जल निगरानी / Jal Nigrani ===== */
+
+@theme {
+  --color-navy: #1E2530;
+  --color-navy-light: #2E3747;
+  --color-navy-dark: #121720;
+  --color-saffron: #C28B53;
+  --color-saffron-light: #D4A373;
+  --color-saffron-dark: #A66E38;
+  --color-water-blue: #5C7A99;
+  --color-water-blue-light: #7E9BB8;
+  --color-safe: #5F7A68;
+  --color-safe-light: #F0F4F1;
+  --color-warning: #C28B53;
+  --color-warning-light: #FBF6F0;
+  --color-critical: #A05252;
+  --color-critical-light: #FAF3F3;
+  --color-bg: #FAF9F6;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-light: #F4F2EB;
+  --color-bg-white: #FFFFFF;
+  --color-text: #1E2530;
+  --color-text-secondary: #5A6270;
+  --color-text-muted: #959DAA;
+  --color-border: #E2DDD5;
+  --color-border-light: #EFECE6;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+/* ===== BASE RESETS ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+/* Status colors */
+.status-safe { color: var(--color-safe); }
+.status-warning { color: var(--color-warning); }
+.status-critical { color: var(--color-critical); }
+
+.bg-safe { background-color: var(--color-safe); }
+.bg-warning { background-color: var(--color-warning); }
+.bg-critical { background-color: var(--color-critical); }
+
+.bg-safe-light { background-color: var(--color-safe-light); }
+.bg-warning-light { background-color: var(--color-warning-light); }
+.bg-critical-light { background-color: var(--color-critical-light); }
+
+/* Water flow animation for SVG */
+@keyframes waterFlow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.water-flow {
+  animation: waterFlow 1s linear infinite;
+  stroke-dasharray: 10 10;
+}
+
+/* Pulse animation for live indicators */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Spin animation for loading */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+
