@@ -277,18 +277,47 @@ const PipelineMonitor = () => {
             </div>
           </section>
 
-          {/* Section 2: Node Device Health & Telemetry */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            
-            {/* P1 Health Card */}
-            <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
-              <div className="bg-[#F5F3EF] px-6 py-4 border-b border-border-light">
-                <h4 className="text-base font-bold text-[#1B3A5C]">P1 Sensor Telemetry</h4>
+          {/* Section 2: Flow Rate Chart + Sensor Telemetry (side by side) */}
+          <section className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+            {/* Flow Rate Comparison Chart — left, takes 3/5 */}
+            <div className="lg:col-span-3 bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
+              <div className="px-6 pt-6 pb-2">
+                <h3 className="text-base font-bold text-[#1E2530]">
+                  Flow Rate Comparison (24 Hours)
+                </h3>
+                <p className="text-[10px] text-text-muted font-medium uppercase tracking-wider mt-0.5">Hourly average flow rate comparison</p>
               </div>
-              <div className="p-6 space-y-4 text-base flex-1 flex flex-col justify-between">
-                <div className="space-y-3">
+
+              <div className="p-6 pt-2">
+                <div className="w-full h-72">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={flowData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#E8E4DC" />
+                      <XAxis dataKey="time" fontSize={10} stroke="#888888" tickLine={false} />
+                      <YAxis fontSize={10} stroke="#888888" tickLine={false} axisLine={false} label={{ value: 'L/min', angle: -90, position: 'insideLeft', fill: '#888888', fontSize: 11 }} />
+                      <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#D4D0C8', borderRadius: '8px' }} />
+                      <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '11px' }} />
+                      <Line type="monotone" dataKey="p1" name="P1 — Start" stroke="#1B3A5C" strokeWidth={2.5} dot={false} activeDot={{ r: 6 }} />
+                      <Line type="monotone" dataKey="p2" name="P2 — Middle" stroke="#E8911A" strokeWidth={2.5} dot={false} />
+                      <Line type="monotone" dataKey="p3" name="P3 — Tail" stroke="#4A90B8" strokeWidth={2.5} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+
+            {/* Sensor Telemetry Cards — right, takes 2/5, stacked vertically */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+
+              {/* P1 Sensor Telemetry */}
+              <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
+                <div className="px-6 pt-5 pb-3">
+                  <h4 className="text-base font-bold text-[#1E2530]">P1 Sensor Telemetry</h4>
+                </div>
+                <div className="px-6 pb-5 space-y-3 text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-text-secondary">बैटरी / Battery:</span>
+                    <span className="text-text-secondary">Battery:</span>
                     <div className="flex items-center gap-2">
                       <div className="w-16 bg-gray-200 h-2.5 rounded-full overflow-hidden">
                         <div className="h-full rounded-full" style={{ width: `${pipelineNodesHealth.p1.battery}%`, backgroundColor: getBatteryColor(pipelineNodesHealth.p1.battery) }} />
@@ -297,30 +326,28 @@ const PipelineMonitor = () => {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">सिग्नल / Signal:</span>
+                    <span className="text-text-secondary">Signal:</span>
                     <span className={getSignalColor(pipelineNodesHealth.p1.signal)}>{pipelineNodesHealth.p1.signal}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">अपटाइम / Uptime:</span>
-                    <span className="font-medium text-[#1B3A5C]">{pipelineNodesHealth.p1.uptime}</span>
+                    <span className="text-text-secondary">Uptime:</span>
+                    <span className="font-medium text-[#1E2530]">{pipelineNodesHealth.p1.uptime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Last Seen:</span>
+                    <span className="text-text-muted">{pipelineNodesHealth.p1.lastSeen}</span>
                   </div>
                 </div>
-                <div className="flex justify-between border-t pt-3 mt-3">
-                  <span className="text-text-secondary text-xs">आखरी देखा / Last Seen:</span>
-                  <span className="text-xs text-text-muted">{pipelineNodesHealth.p1.lastSeen}</span>
-                </div>
               </div>
-            </div>
 
-            {/* P2 Health Card */}
-            <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
-              <div className="bg-[#F5F3EF] px-6 py-4 border-b border-border-light">
-                <h4 className="text-base font-bold text-[#1B3A5C]">P2 Sensor Telemetry</h4>
-              </div>
-              <div className="p-6 space-y-4 text-base flex-1 flex flex-col justify-between">
-                <div className="space-y-3">
+              {/* P2 Sensor Telemetry */}
+              <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
+                <div className="px-6 pt-5 pb-3">
+                  <h4 className="text-base font-bold text-[#1E2530]">P2 Sensor Telemetry</h4>
+                </div>
+                <div className="px-6 pb-5 space-y-3 text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-text-secondary">बैटरी / Battery:</span>
+                    <span className="text-text-secondary">Battery:</span>
                     <div className="flex items-center gap-2">
                       <div className="w-16 bg-gray-200 h-2.5 rounded-full overflow-hidden">
                         <div className="h-full rounded-full" style={{ width: `${pipelineNodesHealth.p2.battery}%`, backgroundColor: getBatteryColor(pipelineNodesHealth.p2.battery) }} />
@@ -329,30 +356,28 @@ const PipelineMonitor = () => {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">सिग्नल / Signal:</span>
+                    <span className="text-text-secondary">Signal:</span>
                     <span className={getSignalColor(pipelineNodesHealth.p2.signal)}>{pipelineNodesHealth.p2.signal}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">अपटाइम / Uptime:</span>
-                    <span className="font-medium text-[#1B3A5C]">{pipelineNodesHealth.p2.uptime}</span>
+                    <span className="text-text-secondary">Uptime:</span>
+                    <span className="font-medium text-[#1E2530]">{pipelineNodesHealth.p2.uptime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Last Seen:</span>
+                    <span className="text-text-muted">{pipelineNodesHealth.p2.lastSeen}</span>
                   </div>
                 </div>
-                <div className="flex justify-between border-t pt-3 mt-3">
-                  <span className="text-text-secondary text-xs">आखरी देखा / Last Seen:</span>
-                  <span className="text-xs text-text-muted">{pipelineNodesHealth.p2.lastSeen}</span>
-                </div>
               </div>
-            </div>
 
-            {/* P3 Health Card */}
-            <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
-              <div className="bg-[#F5F3EF] px-6 py-4 border-b border-border-light">
-                <h4 className="text-base font-bold text-[#1B3A5C]">P3 Sensor Telemetry</h4>
-              </div>
-              <div className="p-6 space-y-4 text-base flex-1 flex flex-col justify-between">
-                <div className="space-y-3">
+              {/* P3 Sensor Telemetry */}
+              <div className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
+                <div className="px-6 pt-5 pb-3">
+                  <h4 className="text-base font-bold text-[#1E2530]">P3 Sensor Telemetry</h4>
+                </div>
+                <div className="px-6 pb-5 space-y-3 text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-text-secondary">बैटरी / Battery:</span>
+                    <span className="text-text-secondary">Battery:</span>
                     <div className="flex items-center gap-2">
                       <div className="w-16 bg-gray-200 h-2.5 rounded-full overflow-hidden">
                         <div className="h-full rounded-full" style={{ width: `${pipelineNodesHealth.p3.battery}%`, backgroundColor: getBatteryColor(pipelineNodesHealth.p3.battery) }} />
@@ -361,47 +386,20 @@ const PipelineMonitor = () => {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">सिग्नल / Signal:</span>
+                    <span className="text-text-secondary">Signal:</span>
                     <span className={getSignalColor(pipelineNodesHealth.p3.signal)}>{pipelineNodesHealth.p3.signal}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-text-secondary">अपटाइम / Uptime:</span>
-                    <span className="font-medium text-[#1B3A5C]">{pipelineNodesHealth.p3.uptime}</span>
+                    <span className="text-text-secondary">Uptime:</span>
+                    <span className="font-medium text-[#1E2530]">{pipelineNodesHealth.p3.uptime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Last Seen:</span>
+                    <span className="text-text-muted">{pipelineNodesHealth.p3.lastSeen}</span>
                   </div>
                 </div>
-                <div className="flex justify-between border-t pt-3 mt-3">
-                  <span className="text-text-secondary text-xs">आखरी देखा / Last Seen:</span>
-                  <span className="text-xs text-text-muted">{pipelineNodesHealth.p3.lastSeen}</span>
-                </div>
               </div>
-            </div>
 
-          </section>
-
-          {/* Section 3: Flow Rate Comparison Graph */}
-          <section className="bg-white rounded-xl border border-border-light shadow-sm flex flex-col overflow-hidden">
-            <div className="bg-[#F5F3EF] px-6 py-4 border-b border-border-light">
-              <h3 className="text-sm font-bold text-[#1B3A5C]">
-                प्रवाह दर तुलना (24 घंटे) / Flow Rate Comparison (24 Hours)
-              </h3>
-              <p className="text-[10px] text-text-muted font-medium uppercase tracking-wider mt-0.5">विभिन्न नोड्स पर पानी की मात्रा का प्रति घंटा विश्लेषण / Hourly volume analysis</p>
-            </div>
-            
-            <div className="p-6">
-              <div className="w-full h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={flowData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E8E4DC" />
-                    <XAxis dataKey="time" fontSize={10} stroke="#888888" tickLine={false} />
-                    <YAxis fontSize={10} stroke="#888888" tickLine={false} axisLine={false} label={{ value: 'L/min', angle: -90, position: 'insideLeft', fill: '#888888', fontSize: 11 }} />
-                    <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#D4D0C8', borderRadius: '8px' }} />
-                    <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '11px' }} />
-                    <Line type="monotone" dataKey="p1" name="P1 — Start" stroke="#1B3A5C" strokeWidth={2.5} dot={false} activeDot={{ r: 6 }} />
-                    <Line type="monotone" dataKey="p2" name="P2 — Middle" stroke="#E8911A" strokeWidth={2.5} dot={false} />
-                    <Line type="monotone" dataKey="p3" name="P3 — Tail" stroke="#4A90B8" strokeWidth={2.5} dot={false} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
             </div>
           </section>
         </div>
