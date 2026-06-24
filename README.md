@@ -24,6 +24,18 @@ The application is deployed on GitHub Pages:
 
 ---
 
+## 🔑 Role-Based Access & Test Credentials
+
+The application uses role-based authentication to serve different dashboards and views depending on the user. Access the respective pages using the mock credentials below:
+
+| Role | Username | Password | Access / Redirects To | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **Villager** | `villager1` | `pass123` | `/village-status` | View public status of water availability and quality reports in the village. |
+| **Jal Bahini** | `jalbahini1` | `pass123` | `/dashboard` | Monitor local pipeline sensors, submit logs, track alerts, and submit reports. |
+| **District Officer** | `officer1` | `pass123` | `/officer-dashboard` | Manage regional datasets, review district-wide metrics, and configure alerts. |
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Frontend Core**: React 19, TypeScript
