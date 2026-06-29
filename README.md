@@ -5,12 +5,6 @@
 
 ---
 
-## 🚀 Live Demo
-The application is deployed on GitHub Pages:
-🔗 **[https://aaysha1729.github.io/jal-nigrani/](https://aaysha1729.github.io/jal-nigrani/)**
-
----
-
 ## 🌟 Key Features
 
 - **Real-Time Dashboards**: Interactive data visualization showing water quality parameters (pH, Turbidity, Chlorine), pressure, and flow rates.
